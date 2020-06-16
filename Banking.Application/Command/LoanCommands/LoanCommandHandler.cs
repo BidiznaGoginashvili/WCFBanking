@@ -1,18 +1,20 @@
 ﻿using System;
-using BankingSystemService.Result;
+using Banking.Application.Result;
 using Banking.Domain.LoanManagement;
 using Banking.Domain.UserManagement;
+using System.Data.Entity.Validation;
+using Banking.Application.Extensions;
 using Banking.Infrastructure.Repository;
 
-namespace BankingSystemService.Command.LoanCommands
+namespace Banking.Application.Command.LoanCommands
 {
     public class LoanCommandHandler :
-        IRequestHandler<CreateLoanCommand, CommandResult<Loan>>
+        IRequestHandler<CreateLoanCommand, CommandResult>
     {
         public static Repository<User> repository = new Repository<User>();
         public static Repository<Loan> loanRepository = new Repository<Loan>();
 
-        public CommandResult<Loan> Handle(CreateLoanCommand request)
+        public CommandResult Handle(CreateLoanCommand request)
         {
             try
             {
@@ -25,22 +27,20 @@ namespace BankingSystemService.Command.LoanCommands
                         loan.UserId = request.UserId;
                         loan.User = repository.GetById(request.UserId);
                     }
+
+                    loanRepository.Insert(loan);
+                    return new CommandResult(true);
                 }
 
-                loanRepository.Insert(loan);
-
-                return new CommandResult<Loan>
-                {
-                    Success = true
-                };
+                return new CommandResult(false, "User not found");
+            }
+            catch (DbEntityValidationException validations)
+            {
+                return new CommandResult(false, validations.GetValidations());
             }
             catch (Exception exception)
             {
-                return new CommandResult<Loan>
-                {
-                    Success = false,
-                    Exception = exception
-                };
+                return new CommandResult(false, exception.Message);
             }
         }
     }

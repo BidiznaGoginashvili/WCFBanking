@@ -11,6 +11,12 @@ namespace Banking.Domain.CityManagement
         public string Name { get; set; }
         [DataMember]
         public Country Country { get; set; }
+
+        public City()
+        {
+
+        }
+
         public City(string name)
         {
             Name = name;

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BankingSystemService.Query.UserQueries
+namespace Banking.Application.Query.UserQueries
 {
     [DataContract]
     public class UserListQuery

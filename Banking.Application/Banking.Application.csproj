@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B8AEB9BC-A924-4577-90F9-7F39C59B9D64}</ProjectGuid>
+    <ProjectGuid>{F1E5C1AA-6C7C-4951-AA3B-DB793F85F3F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Banking.Infrastructure</RootNamespace>
-    <AssemblyName>Banking.Infrastructure</AssemblyName>
+    <RootNamespace>Banking.Application</RootNamespace>
+    <AssemblyName>Banking.Application</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,36 +53,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBase\BankingContext.cs" />
-    <Compile Include="Migrations\202006160059265_InitializeDatabase.cs" />
-    <Compile Include="Migrations\202006160059265_InitializeDatabase.designer.cs">
-      <DependentUpon>202006160059265_InitializeDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006161831234_InitializeValidations.cs" />
-    <Compile Include="Migrations\202006161831234_InitializeValidations.designer.cs">
-      <DependentUpon>202006161831234_InitializeValidations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Command\DepositCommands\CreateDepositCommand.cs" />
+    <Compile Include="Command\DepositCommands\DepositCommandHandler.cs" />
+    <Compile Include="Command\LoanCommands\CreateLoanCommand.cs" />
+    <Compile Include="Command\LoanCommands\LoanCommandHandler.cs" />
+    <Compile Include="Command\UserCommands\DeleteUserCommand.cs" />
+    <Compile Include="Command\UserCommands\LoginUserCommand.cs" />
+    <Compile Include="Command\UserCommands\RegisterUserCommand.cs" />
+    <Compile Include="Command\UserCommands\UpdateUserCommand.cs" />
+    <Compile Include="Command\UserCommands\UserCommandHandler.cs" />
+    <Compile Include="Extensions\ValidationExtensions.cs" />
+    <Compile Include="IRequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Repository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <Compile Include="Query\UserQueries\UserDetailsQuery.cs" />
+    <Compile Include="Query\UserQueries\UserListQuery.cs" />
+    <Compile Include="Query\UserQueries\UserQueryHandler.cs" />
+    <Compile Include="Result\CommandResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Banking.Domain\Banking.Domain.csproj">
       <Project>{65B07148-0839-4CD2-8435-8C3F0DC1A42E}</Project>
       <Name>Banking.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Banking.Infrastructure\Banking.Infrastructure.csproj">
+      <Project>{B8AEB9BC-A924-4577-90F9-7F39C59B9D64}</Project>
+      <Name>Banking.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Banking.Shared\Banking.Shared.csproj">
+      <Project>{36a6726e-2ead-4ad5-9bc8-8e6f487d860c}</Project>
+      <Name>Banking.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006160059265_InitializeDatabase.resx">
-      <DependentUpon>202006160059265_InitializeDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006161831234_InitializeValidations.resx">
-      <DependentUpon>202006161831234_InitializeValidations.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

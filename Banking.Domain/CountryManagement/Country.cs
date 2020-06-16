@@ -13,6 +13,12 @@ namespace Banking.Domain.CountryManagement
 
         [DataMember]
         public ICollection<City> Cities { get; set; }
+
+        public Country()
+        {
+
+        }
+
         public Country(string name)
         {
             Name = name;

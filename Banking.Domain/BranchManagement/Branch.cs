@@ -12,6 +12,11 @@ namespace Banking.Domain.BranchManagement
 
         public ICollection<User> Users { get; set; }
 
+        public Branch()
+        {
+
+        }
+
         public Branch(string name)
         {
             Name = name;

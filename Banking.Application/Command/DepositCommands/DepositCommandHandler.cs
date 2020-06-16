@@ -1,24 +1,26 @@
 ﻿using System;
-using BankingSystemService.Result;
+using Banking.Application.Result;
+using System.Data.Entity.Validation;
 using Banking.Domain.UserManagement;
 using Banking.Domain.DepositManagement;
 using Banking.Infrastructure.Repository;
+using Banking.Application.Extensions;
 
-namespace BankingSystemService.Command.DepositCommands
+namespace Banking.Application.Command.DepositCommands
 {
     public class DepositCommandHandler :
-        IRequestHandler<CreateDepositCommand, CommandResult<Deposit>>
+        IRequestHandler<CreateDepositCommand, CommandResult>
     {
         public static Repository<User> repository = new Repository<User>();
         public static Repository<Deposit> depositRepository = new Repository<Deposit>();
 
-        public CommandResult<Deposit> Handle(CreateDepositCommand request)
+        public CommandResult Handle(CreateDepositCommand request)
         {
             try
             {
-                var deposit = new Deposit(request.Balance, request.MonthlyPay);
                 if (request.UserId > 0)
                 {
+                    var deposit = new Deposit(request.Balance, request.MonthlyPay);
                     var user = repository.GetById(request.UserId);
                     if (user != null)
                     {
@@ -26,22 +28,22 @@ namespace BankingSystemService.Command.DepositCommands
                         deposit.UserId = request.UserId;
                         deposit.User = repository.GetById(request.UserId);
                     }
+
+
+                    depositRepository.Insert(deposit);
+
+                    return new CommandResult(true);
                 }
 
-                depositRepository.Insert(deposit);
-
-                return new CommandResult<Deposit>
-                {
-                    Success = true
-                };
+                return new CommandResult(false, "User not found");
+            }
+            catch (DbEntityValidationException validations)
+            {
+                return new CommandResult(false, validations.GetValidations());
             }
             catch (Exception exception)
             {
-                return new CommandResult<Deposit>
-                {
-                    Success = false,
-                    Exception = exception
-                };
+                return new CommandResult(false, exception.Message);
             }
         }
     }

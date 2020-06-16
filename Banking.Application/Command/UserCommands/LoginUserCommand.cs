@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BankingSystemService.Command.UserCommands
+namespace Banking.Application.Command.UserCommands
 {
     [DataContract]
     public class LoginUserCommand

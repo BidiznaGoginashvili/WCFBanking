@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BankingSystemService.Command.DepositCommands
+namespace Banking.Application.Command.DepositCommands
 {
     [DataContract]
     public class CreateDepositCommand

@@ -16,6 +16,11 @@ namespace Banking.Domain.DepositManagement
         [DataMember]
         public UserManagement.User User { get; set; }
 
+        public Deposit()
+        {
+
+        }
+
         public Deposit(decimal balance, decimal monthlyPay)
         {
             Balance = balance;

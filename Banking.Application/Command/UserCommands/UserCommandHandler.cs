@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Linq;
-using BankingSystemService.Result;
+using Banking.Application.Result;
 using Banking.Domain.UserManagement;
 using Banking.Domain.CityManagement;
+using Banking.Domain.BranchManagement;
 using Banking.Domain.CountryManagement;
 using Banking.Infrastructure.Repository;
-using Banking.Domain.BranchManagement;
+using System.Data.Entity.Validation;
+using Banking.Application.Extensions;
 
-namespace BankingSystemService.Command.UserCommands
+namespace Banking.Application.Command.UserCommands
 {
     public class UserCommandHandler :
-        IRequestHandler<RegisterUserCommand, CommandResult<User>>,
-        IRequestHandler<DeleteUserCommand, CommandResult<User>>,
-        IRequestHandler<UpdateUserCommand, CommandResult<User>>,
-        IRequestHandler<LoginUserCommand, CommandResult<User>>
+        IRequestHandler<RegisterUserCommand, CommandResult>,
+        IRequestHandler<DeleteUserCommand, CommandResult>,
+        IRequestHandler<UpdateUserCommand, CommandResult>,
+        IRequestHandler<LoginUserCommand, CommandResult>
     {
         public static Repository<User> repository = new Repository<User>();
         public static Repository<City> cityRepository = new Repository<City>();
         public static Repository<Country> countryRepository = new Repository<Country>();
         public static Repository<Branch> brancRepository = new Repository<Branch>();
 
-        public CommandResult<User> Handle(RegisterUserCommand request)
+        public CommandResult Handle(RegisterUserCommand request)
         {
             try
             {
@@ -37,22 +39,19 @@ namespace BankingSystemService.Command.UserCommands
 
                 repository.Insert(user);
 
-                return new CommandResult<User>
-                {
-                    Entity = user
-                };
+                return new CommandResult(true);
+            }
+            catch (DbEntityValidationException validations)
+            {
+                return new CommandResult(false, validations.GetValidations());
             }
             catch (Exception exception)
             {
-                return new CommandResult<User>
-                {
-                    Success = false,
-                    Exception = exception
-                };
+                return new CommandResult(false, exception.Message);
             }
         }
 
-        public CommandResult<User> Handle(DeleteUserCommand request)
+        public CommandResult Handle(DeleteUserCommand request)
         {
             try
             {
@@ -61,19 +60,19 @@ namespace BankingSystemService.Command.UserCommands
                 if (user != null)
                     repository.Delete(user);
 
-                return new CommandResult<User>();
+                return new CommandResult(true);
+            }
+            catch (DbEntityValidationException validations)
+            {
+                return new CommandResult(false, validations.GetValidations());
             }
             catch (Exception exception)
             {
-                return new CommandResult<User>
-                {
-                    Success = false,
-                    Exception = exception
-                };
+                return new CommandResult(false, exception.Message);
             }
         }
 
-        public CommandResult<User> Handle(UpdateUserCommand request)
+        public CommandResult Handle(UpdateUserCommand request)
         {
             try
             {
@@ -89,22 +88,19 @@ namespace BankingSystemService.Command.UserCommands
 
                 repository.Update(user);
 
-                return new CommandResult<User>
-                {
-                    Entity = updated
-                };
+                return new CommandResult(true);
+            }
+            catch (DbEntityValidationException validations)
+            {
+                return new CommandResult(false, validations.GetValidations());
             }
             catch (Exception exception)
             {
-                return new CommandResult<User>
-                {
-                    Success = false,
-                    Exception = exception
-                };
+                return new CommandResult(false, exception.Message);
             }
         }
 
-        public CommandResult<User> Handle(LoginUserCommand request)
+        public CommandResult Handle(LoginUserCommand request)
         {
             try
             {
@@ -112,19 +108,15 @@ namespace BankingSystemService.Command.UserCommands
                 if (!string.IsNullOrWhiteSpace(request.Email) && !string.IsNullOrWhiteSpace(request.Password))
                     user = repository.GetAll().FirstOrDefault(u => u.Email == request.Email &&
                                                      u.UniqueNumber == request.Password);
-                return new CommandResult<User>
-                {
-                    Success = true,
-                    Entity = user
-                };
+                return new CommandResult(true);
+            }
+            catch (DbEntityValidationException validations)
+            {
+                return new CommandResult(false, validations.GetValidations());
             }
             catch (Exception exception)
             {
-                return new CommandResult<User>
-                {
-                    Success = false,
-                    Exception = exception
-                };
+                return new CommandResult(false, exception.Message);
             }
         }
     }

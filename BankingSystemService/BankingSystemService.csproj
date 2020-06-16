@@ -75,27 +75,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\DepositCommands\CreateDepositCommand.cs" />
-    <Compile Include="Command\DepositCommands\DepositCommandHandler.cs" />
-    <Compile Include="Command\LoanCommands\CreateLoanCommand.cs" />
-    <Compile Include="Command\LoanCommands\LoanCommandHandler.cs" />
-    <Compile Include="Command\UserCommands\DeleteUserCommand.cs" />
-    <Compile Include="Command\UserCommands\LoginUserCommand.cs" />
-    <Compile Include="Command\UserCommands\RegisterUserCommand.cs" />
-    <Compile Include="Command\UserCommands\UpdateUserCommand.cs" />
-    <Compile Include="Command\UserCommands\UserCommandHandler.cs" />
     <Compile Include="ExecutorService.svc.cs">
       <DependentUpon>ExecutorService.svc</DependentUpon>
     </Compile>
     <Compile Include="IExecutorService.cs" />
-    <Compile Include="IRequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\UserQueries\UserDetailsQuery.cs" />
-    <Compile Include="Query\UserQueries\UserListQuery.cs" />
-    <Compile Include="Query\UserQueries\UserQueryHandler.cs" />
-    <Compile Include="Result\CommandResult.cs" />
-    <Compile Include="Result\ExecutionResult.cs" />
-    <Compile Include="Result\QueryResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -110,6 +94,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Banking.Application\Banking.Application.csproj">
+      <Project>{F1E5C1AA-6C7C-4951-AA3B-DB793F85F3F9}</Project>
+      <Name>Banking.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Banking.Domain\Banking.Domain.csproj">
       <Project>{65B07148-0839-4CD2-8435-8C3F0DC1A42E}</Project>
       <Name>Banking.Domain</Name>

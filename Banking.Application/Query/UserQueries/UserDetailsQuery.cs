@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BankingSystemService.Command.UserCommands
+namespace Banking.Application.Query.UserQueries
 {
     [DataContract]
-    public class DeleteUserCommand
+    public class UserDetailsQuery
     {
         [DataMember]
         public int Id { get; set; }

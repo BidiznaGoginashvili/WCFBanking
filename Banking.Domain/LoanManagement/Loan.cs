@@ -21,6 +21,11 @@ namespace Banking.Domain.LoanManagement
         [DataMember]
         public UserManagement.User User { get; set; }
 
+        public Loan()
+        {
+
+        }
+
         public Loan(decimal amount, decimal monthlyPay, DateTime startDate, DateTime finishDate)
         {
             Amount = amount;

@@ -8,6 +8,7 @@ using Banking.Domain.CityManagement;
 using Banking.Domain.BranchManagement;
 using Banking.Domain.DepositManagement;
 using Banking.Domain.CountryManagement;
+using System.ComponentModel.DataAnnotations;
 
 namespace Banking.Domain.UserManagement
 {
@@ -15,20 +16,30 @@ namespace Banking.Domain.UserManagement
     public class User : AggregateRoot
     {
         [DataMember]
+        [MinLength(2)]
+        [MaxLength(50)]
         public string FirstName { get; set; }
         [DataMember]
+        [MinLength(2)]
+        [MaxLength(50)]
         public string LastName { get; set; }
         [DataMember]
         public byte Gender { get; set; }
         [DataMember]
+        [Required]
+        [MinLength(11)]
+        [MaxLength(11)]
         public string UniqueNumber { get; set; }
         [DataMember]
         public DateTime BirthDay { get; private set; }
         [DataMember]
         public string Address { get; set; }
         [DataMember]
+        [Required]
         public string Email { get; set; }
         [DataMember]
+        [MinLength(4)]
+        [MaxLength(50)]
         public string Phone { get; set; }
 
         [DataMember]

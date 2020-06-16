@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace BankingSystemService.Command.LoanCommands
+namespace Banking.Application.Command.LoanCommands
 {
     [DataContract]
     public class CreateLoanCommand

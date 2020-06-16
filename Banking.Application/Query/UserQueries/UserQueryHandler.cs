@@ -1,39 +1,32 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using BankingSystemService.Result;
 using Banking.Domain.UserManagement;
 using Banking.Infrastructure.Repository;
 
-namespace BankingSystemService.Query.UserQueries
+namespace Banking.Application.Query.UserQueries
 {
     public class UserQueryHandler :
-        IRequestHandler<UserDetailsQuery, QueryResult<User>>,
-        IRequestHandler<UserListQuery, QueryResult<IEnumerable<User>>>
+        IRequestHandler<UserDetailsQuery, User>,
+        IRequestHandler<UserListQuery, IEnumerable<User>>
     {
         public static Repository<User> repository = new Repository<User>();
 
-        public QueryResult<User> Handle(UserDetailsQuery request)
+        public User Handle(UserDetailsQuery request)
         {
             try
             {
                 var user = repository.GetById(request.Id);
 
-                return new QueryResult<User>
-                {
-                    Entity = user
-                };
+                return user;
             }
             catch (Exception execption)
             {
-                return new QueryResult<User>
-                {
-                    Exception = execption
-                };
+                return default(User);
             }
         }
 
-        public QueryResult<IEnumerable<User>> Handle(UserListQuery request)
+        public IEnumerable<User> Handle(UserListQuery request)
         {
             try
             {
@@ -44,17 +37,11 @@ namespace BankingSystemService.Query.UserQueries
                 if (string.IsNullOrWhiteSpace(request.Email))
                     users = users.Where(user => user.FirstName.Contains(request.Email)).ToList();
 
-                return new QueryResult<IEnumerable<User>>
-                {
-                    Entity = users
-                };
+                return users;
             }
             catch (Exception execption)
             {
-                return new QueryResult<IEnumerable<User>>
-                {
-                    Exception = execption
-                };
+                return default(IEnumerable<User>);
             }
         }
     }

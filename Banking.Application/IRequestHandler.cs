@@ -1,4 +1,4 @@
-﻿namespace BankingSystemService
+﻿namespace Banking.Application
 {
     public interface IRequestHandler<TRequest, TResponse>
     {
