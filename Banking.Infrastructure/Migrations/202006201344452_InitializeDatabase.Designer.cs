@@ -7,13 +7,13 @@ namespace Banking.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InitializeValidations : IMigrationMetadata
+    public sealed partial class InitializeDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeValidations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006161831234_InitializeValidations"; }
+            get { return "202006201344452_InitializeDatabase"; }
         }
         
         string IMigrationMetadata.Source

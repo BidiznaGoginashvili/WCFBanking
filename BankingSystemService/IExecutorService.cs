@@ -13,41 +13,49 @@ namespace BankingSystemService
 {
     [ServiceContract]
     [ServiceKnownTypeAttribute(typeof(CommandResult))]
-    //[ServiceKnownTypeAttribute(typeof(QueryResult))]
     public interface IExecutorService
     {
         #region Deposit
 
-        [OperationContract(Name = "CreateDeposit")]
-        CommandResult Execute(CreateDepositCommand command);
+        [OperationContract]
+        CommandResult CreateDeposit(CreateDepositCommand command);
 
         #endregion
 
         #region Loan
 
-        [OperationContract(Name = "CreateLoan")]
-        CommandResult Execute(CreateLoanCommand command);
+        [OperationContract]
+        CommandResult CreateLoan(CreateLoanCommand command);
 
         #endregion
 
         #region User
-        [OperationContract(Name = "LoginUser")]
-        CommandResult Execute(LoginUserCommand command);
-        [OperationContract(Name = "CreateUser")]
-        CommandResult Execute(RegisterUserCommand command);
-        [OperationContract(Name = "UpdateUser")]
-        CommandResult Execute(UpdateUserCommand command);
-        [OperationContract(Name = "DeleteUser")]
-        CommandResult Execute(DeleteUserCommand command);
 
-        [OperationContract(Name = "QueryUserDetails")]
-        User Execute(UserDetailsQuery command);
-        [OperationContract(Name = "QueryUsers")]
-        IEnumerable<User> Execute(UserListQuery command);
+        [OperationContract]
+        User LoginUser(LoginUserCommand command);
+
+        [OperationContract]
+        CommandResult CreateUser(RegisterUserCommand command);
+
+        [OperationContract]
+        CommandResult UpdateUser(UpdateUserCommand command);
+
+        [OperationContract]
+        CommandResult DeleteUser(DeleteUserCommand command);
+
+        [OperationContract]
+        User QueryUserDetails(UserDetailsQuery command);
+
+        [OperationContract]
+        IEnumerable<User> QueryUsers(UserListQuery command);
 
         #endregion
 
         #region Others
+
+        [OperationContract]
+        string GetRoleName(int userId);
+
         #endregion
     }
 }

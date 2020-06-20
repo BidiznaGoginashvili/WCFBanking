@@ -24,10 +24,5 @@ namespace Banking.Application.Command.UserCommands
         public string Email { get; set; }
         [DataMember]
         public string Phone { get; set; }
-
-        [DataMember]
-        public int CountryId { get; set; }
-        [DataMember]
-        public int CityId { get; set; }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System.Data.Entity;
-using Banking.Domain.CityManagement;
 using Banking.Domain.LoanManagement;
 using Banking.Domain.RoleManagement;
 using Banking.Domain.UserManagement;
-using Banking.Domain.CountryManagement;
+using Banking.Domain.BranchManagement;
 using Banking.Domain.DepositManagement;
 
 namespace Banking.Infrastructure.DataBase
@@ -14,9 +13,7 @@ namespace Banking.Infrastructure.DataBase
         public DbSet<Role> Role { get; set; }
         public DbSet<Loan> Loan { get; set; }
         public DbSet<Deposit> Deposit { get; set; }
-
-        public DbSet<City> City { get; set; }
-        public DbSet<Country> Country { get; set; }
+        public DbSet<Branch> Branches { get; set; }
 
         public BankingContext() : base(@"Server=DESKTOP-KCSUK0G\BIDZINASQL; Database=BankingManagement; Trusted_Connection=True")
         {
@@ -25,13 +22,17 @@ namespace Banking.Infrastructure.DataBase
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Country>()
-              .HasMany(country => country.Cities)
-              .WithOptional(city => city.Country);
-
             modelBuilder.Entity<User>()
              .HasMany(user => user.Loans)
              .WithOptional(loan => loan.User);
+
+            modelBuilder.Entity<Role>()
+             .HasMany(role => role.Users)
+             .WithOptional(user => user.Role);
+
+            modelBuilder.Entity<Branch>()
+            .HasMany(c => c.Users)
+            .WithOptional(e => e.Branches);
 
             modelBuilder.Entity<User>()
             .HasMany(user => user.Deposits)

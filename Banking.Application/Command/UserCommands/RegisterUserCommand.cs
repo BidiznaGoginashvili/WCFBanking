@@ -25,9 +25,5 @@ namespace Banking.Application.Command.UserCommands
 
         [DataMember]
         public int BranchId { get; set; }
-        [DataMember]
-        public int CountryId { get; set; }
-        [DataMember]
-        public int CityId { get; set; }
     }
 }

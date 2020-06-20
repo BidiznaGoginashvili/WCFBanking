@@ -62,7 +62,6 @@
     <Compile Include="Command\UserCommands\RegisterUserCommand.cs" />
     <Compile Include="Command\UserCommands\UpdateUserCommand.cs" />
     <Compile Include="Command\UserCommands\UserCommandHandler.cs" />
-    <Compile Include="Extensions\ValidationExtensions.cs" />
     <Compile Include="IRequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\UserQueries\UserDetailsQuery.cs" />

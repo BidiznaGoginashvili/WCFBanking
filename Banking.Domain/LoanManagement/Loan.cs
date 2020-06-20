@@ -8,13 +8,18 @@ namespace Banking.Domain.LoanManagement
     public class Loan : AggregateRoot
     {
         [DataMember]
-        public decimal Amount { get; set; }
+        public decimal Amount { get; private set; }
         [DataMember]
-        public decimal MonthlyPay { get; set; }
+        public decimal MonthlyPay { get; private set; }
         [DataMember]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; private set; }
         [DataMember]
-        public DateTime FinishDate { get; set; }
+        public DateTime FinishDate { get; private set; }
+
+        [DataMember]
+        public int? GuarantorId { get; set; }
+        [DataMember]
+        public Guarantor Guarantor { get; set; }
 
         [DataMember]
         public int? UserId { get; set; }

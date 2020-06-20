@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Banking.Infrastructure.DataBase;
+using System.Data.Entity.Validation;
 
 namespace Banking.Infrastructure.Repository
 {
@@ -34,9 +35,9 @@ namespace Banking.Infrastructure.Repository
                 _context.Set<T>().Add(entity);
                 _context.SaveChangesAsync();
             }
-            catch (Exception dbEx)
+            catch (DbEntityValidationException dbEx)
             {
-                throw new Exception(dbEx.Message);
+                throw new Exception(GetValidations(dbEx));
             }
         }
 
@@ -52,9 +53,9 @@ namespace Banking.Infrastructure.Repository
 
                 _context.SaveChangesAsync();
             }
-            catch (Exception dbEx)
+            catch (DbEntityValidationException dbEx)
             {
-                throw new Exception(dbEx.Message);
+                throw new Exception(GetValidations(dbEx));
             }
         }
 
@@ -67,9 +68,9 @@ namespace Banking.Infrastructure.Repository
 
                 _context.SaveChanges();
             }
-            catch (Exception dbEx)
+            catch (DbEntityValidationException dbEx)
             {
-                throw new Exception(dbEx.Message);
+                throw new Exception(GetValidations(dbEx));
             }
         }
 
@@ -84,9 +85,9 @@ namespace Banking.Infrastructure.Repository
 
                 _context.SaveChanges();
             }
-            catch (Exception dbEx)
+            catch (DbEntityValidationException dbEx)
             {
-                throw new Exception(dbEx.Message);
+                throw new Exception(GetValidations(dbEx));
             }
         }
 
@@ -102,20 +103,29 @@ namespace Banking.Infrastructure.Repository
 
                 _context.SaveChanges();
             }
-            catch (Exception dbEx)
+            catch (DbEntityValidationException dbEx)
             {
-                throw new Exception(dbEx.Message);
+                throw new Exception(GetValidations(dbEx));
             }
         }
 
         public virtual T GetById(object id)
         {
-            return _context.Set<T>().Find(id);
+            return _context.Set<T>().Find();
         }
 
         public virtual IQueryable<T> GetAll()
         {
             return _context.Set<T>().AsNoTracking();
+        }
+
+        public string GetValidations(DbEntityValidationException exception)
+        {
+            var entityValidationErrors = exception.EntityValidationErrors
+                      .SelectMany(validation => validation.ValidationErrors
+                          .Select(error => error.ErrorMessage));
+
+            return string.Join(";", entityValidationErrors.ToArray());
         }
 
         #endregion

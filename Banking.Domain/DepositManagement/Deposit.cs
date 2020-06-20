@@ -7,9 +7,9 @@ namespace Banking.Domain.DepositManagement
     public class Deposit : AggregateRoot
     {
         [DataMember]
-        public decimal Balance { get; set; }
+        public decimal Balance { get; private set; }
         [DataMember]
-        public decimal MonthlyPay { get; set; }
+        public decimal MonthlyPay { get; private set; }
 
         [DataMember]
         public int? UserId { get; set; }

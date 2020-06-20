@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Banking.Domain.LoanManagement;
 using Banking.Domain.RoleManagement;
-using Banking.Domain.CityManagement;
 using Banking.Domain.BranchManagement;
 using Banking.Domain.DepositManagement;
-using Banking.Domain.CountryManagement;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Banking.Domain.UserManagement
 {
@@ -31,7 +30,8 @@ namespace Banking.Domain.UserManagement
         [MaxLength(11)]
         public string UniqueNumber { get; set; }
         [DataMember]
-        public DateTime BirthDay { get; private set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime BirthDay { get; set; }
         [DataMember]
         public string Address { get; set; }
         [DataMember]
@@ -41,11 +41,6 @@ namespace Banking.Domain.UserManagement
         [MinLength(4)]
         [MaxLength(50)]
         public string Phone { get; set; }
-
-        [DataMember]
-        public City City { get; set; }
-        [DataMember]
-        public Country Country { get; set; }
 
         [DataMember]
         public Role Role { get; set; }
@@ -60,7 +55,8 @@ namespace Banking.Domain.UserManagement
 
         public User()
         {
-
+            Loans = new List<Loan>();
+            Deposits = new List<Deposit>();
         }
 
         public User(string firstName, string lastName, byte gender, string uniqueNumber, DateTime birthDay, string address, string email, string phone)
@@ -73,6 +69,8 @@ namespace Banking.Domain.UserManagement
             Address = address;
             Email = email;
             Phone = phone;
+            Loans = new List<Loan>();
+            Deposits = new List<Deposit>();
         }
     }
 }

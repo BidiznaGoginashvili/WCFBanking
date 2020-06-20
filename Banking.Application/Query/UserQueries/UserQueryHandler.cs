@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Banking.Domain.UserManagement;
-using Banking.Infrastructure.Repository;
+using Banking.Infrastructure.DataBase;
 
 namespace Banking.Application.Query.UserQueries
 {
@@ -10,39 +9,24 @@ namespace Banking.Application.Query.UserQueries
         IRequestHandler<UserDetailsQuery, User>,
         IRequestHandler<UserListQuery, IEnumerable<User>>
     {
-        public static Repository<User> repository = new Repository<User>();
-
-        public User Handle(UserDetailsQuery request)
+        public BankingContext context;
+        public UserQueryHandler()
         {
-            try
-            {
-                var user = repository.GetById(request.Id);
-
-                return user;
-            }
-            catch (Exception execption)
-            {
-                return default(User);
-            }
+            context = new BankingContext();
         }
+
+        public User Handle(UserDetailsQuery request) => context.User.SingleOrDefault(user => user.Id == request.Id);
 
         public IEnumerable<User> Handle(UserListQuery request)
         {
-            try
-            {
-                var users = repository.GetAll().ToList();
+            var users = context.User.ToList();
 
-                if (string.IsNullOrWhiteSpace(request.FirstName))
-                    users = users.Where(user => user.FirstName.Contains(request.FirstName)).ToList();
-                if (string.IsNullOrWhiteSpace(request.Email))
-                    users = users.Where(user => user.FirstName.Contains(request.Email)).ToList();
+            if (!string.IsNullOrWhiteSpace(request.FirstName))
+                users = users.Where(user => user.FirstName.Contains(request.FirstName)).ToList();
+            if (!string.IsNullOrWhiteSpace(request.Email))
+                users = users.Where(user => user.FirstName.Contains(request.Email)).ToList();
 
-                return users;
-            }
-            catch (Exception execption)
-            {
-                return default(IEnumerable<User>);
-            }
+            return users;
         }
     }
 }

@@ -5,6 +5,8 @@ using Banking.Application.Query.UserQueries;
 using Banking.Application.Command.LoanCommands;
 using Banking.Application.Command.UserCommands;
 using Banking.Application.Command.DepositCommands;
+using Banking.Infrastructure.DataBase;
+using System.Linq;
 
 namespace BankingSystemService
 {
@@ -12,7 +14,7 @@ namespace BankingSystemService
     {
         #region Deposit
 
-        public CommandResult Execute(CreateDepositCommand command)
+        public CommandResult CreateDeposit(CreateDepositCommand command)
         {
             var handler = new DepositCommandHandler();
             return handler.Handle(command);
@@ -22,7 +24,7 @@ namespace BankingSystemService
 
         #region Loan
 
-        public CommandResult Execute(CreateLoanCommand command)
+        public CommandResult CreateLoan(CreateLoanCommand command)
         {
             var handler = new LoanCommandHandler();
             return handler.Handle(command);
@@ -32,40 +34,50 @@ namespace BankingSystemService
 
         #region User
 
-        public CommandResult Execute(RegisterUserCommand command)
+        public CommandResult CreateUser(RegisterUserCommand command)
         {
             var handler = new UserCommandHandler();
             return handler.Handle(command);
         }
 
-        public CommandResult Execute(LoginUserCommand command)
+        public User LoginUser(LoginUserCommand command)
         {
             var handler = new UserCommandHandler();
             return handler.Handle(command);
         }
 
-        public CommandResult Execute(UpdateUserCommand command)
+        public CommandResult UpdateUser(UpdateUserCommand command)
         {
             var handler = new UserCommandHandler();
             return handler.Handle(command);
         }
                              
-        public CommandResult Execute(DeleteUserCommand command)
+        public CommandResult DeleteUser(DeleteUserCommand command)
         {
             var handler = new UserCommandHandler();
             return handler.Handle(command);
         }
 
-        public User Execute(UserDetailsQuery command)
+        public User QueryUserDetails(UserDetailsQuery command)
         {
             var handler = new UserQueryHandler();
             return handler.Handle(command);
         }
 
-        public IEnumerable<User> Execute(UserListQuery command)
+        public IEnumerable<User> QueryUsers(UserListQuery command)
         {
             var handler = new UserQueryHandler();
             return handler.Handle(command);
+        }
+
+        //ToRemove added because of wcf ef loading error
+        public string GetRoleName(int userId)
+        {
+            using (var context = new BankingContext())
+            {
+                var user = context.User.Include("Role").SingleOrDefault(us => us.Id == userId);
+                return user.Role.Name;
+            };
         }
 
         #endregion

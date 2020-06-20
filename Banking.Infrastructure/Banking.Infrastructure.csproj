@@ -52,13 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\BankingContext.cs" />
-    <Compile Include="Migrations\202006160059265_InitializeDatabase.cs" />
-    <Compile Include="Migrations\202006160059265_InitializeDatabase.designer.cs">
-      <DependentUpon>202006160059265_InitializeDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006161831234_InitializeValidations.cs" />
-    <Compile Include="Migrations\202006161831234_InitializeValidations.designer.cs">
-      <DependentUpon>202006161831234_InitializeValidations.cs</DependentUpon>
+    <Compile Include="Migrations\202006201344452_InitializeDatabase.cs" />
+    <Compile Include="Migrations\202006201344452_InitializeDatabase.designer.cs">
+      <DependentUpon>202006201344452_InitializeDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,11 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006160059265_InitializeDatabase.resx">
-      <DependentUpon>202006160059265_InitializeDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006161831234_InitializeValidations.resx">
-      <DependentUpon>202006161831234_InitializeValidations.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006201344452_InitializeDatabase.resx">
+      <DependentUpon>202006201344452_InitializeDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

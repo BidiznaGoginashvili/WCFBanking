@@ -18,5 +18,14 @@ namespace Banking.Application.Command.LoanCommands
 
         [DataMember]
         public int UserId { get; set; }
+
+        [DataMember]
+        public string GuarantorFirstName { get; set; }
+        [DataMember]
+        public string GuarantorLastName { get; set; }
+        [DataMember]
+        public string Relationship { get; set; }
+        [DataMember]
+        public string Phone { get; set; }
     }
 }

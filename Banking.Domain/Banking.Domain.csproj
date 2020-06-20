@@ -44,9 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BranchManagement\Branch.cs" />
-    <Compile Include="CountryManagement\City.cs" />
-    <Compile Include="CountryManagement\Country.cs" />
     <Compile Include="DepositManagement\Deposit.cs" />
+    <Compile Include="LoanManagement\Guarantor.cs" />
     <Compile Include="LoanManagement\Loan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManagement\Role.cs" />
